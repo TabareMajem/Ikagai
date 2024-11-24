@@ -1,0 +1,40 @@
+import React from 'react';
+import { Home, Flower2, Target, Users, User } from 'lucide-react';
+
+interface Props {
+  currentPage: 'home' | 'garden' | 'missions' | 'profile';
+  onNavigate: (page: 'home' | 'garden' | 'missions' | 'profile') => void;
+}
+
+const navItems = [
+  { icon: Home, label: 'ホーム', enLabel: 'Home', page: 'home' as const },
+  { icon: Flower2, label: '庭', enLabel: 'Garden', page: 'garden' as const },
+  { icon: Target, label: 'ミッション', enLabel: 'Missions', page: 'missions' as const },
+  { icon: Users, label: 'コミュニティ', enLabel: 'Community' },
+  { icon: User, label: 'プロフィール', enLabel: 'Profile', page: 'profile' as const },
+];
+
+export default function Navigation({ currentPage, onNavigate }: Props) {
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+      <div className="max-w-screen-xl mx-auto">
+        <div className="flex justify-between items-center">
+          {navItems.map((item, i) => (
+            <button
+              key={i}
+              onClick={() => item.page && onNavigate(item.page)}
+              className={`flex flex-col items-center p-2 rounded-lg transition-colors ${
+                currentPage === item.page
+                  ? 'text-indigo-600 bg-indigo-50'
+                  : 'text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              <item.icon className="w-6 h-6 mb-1" />
+              <span className="text-xs font-medium">{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+}
